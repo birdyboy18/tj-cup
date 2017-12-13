@@ -6,9 +6,13 @@ function store(state, emitter) {
     emitter.on(state.events.DOMCONTENTLOADED, (e) => {
 
         emitter.on('modal:open', () => {
-            console.log('open modal!');
             state.modalOpen = true;
             emitter.emit(state.events.RENDER);
         });
+
+        emitter.on('modal:close', () => {
+            state.modalOpen = false;
+            emitter.emit(state.events.RENDER);
+        })
     })
 }

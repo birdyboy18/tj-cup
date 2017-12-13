@@ -60,3 +60,13 @@ body {
     opacity: 1;
     visibility: visible;
 }
+
+.close-icon {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+}
+
+.close-icon:hover {
+    background: rgba(0,0,0,0.07);
+}
