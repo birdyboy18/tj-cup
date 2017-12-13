@@ -9,7 +9,7 @@ function view (state, emit) {
     if (state.title !== TITLE) emit(state.events.DOMTITLECHANGE, TITLE)
 
     return html`
-    <body class="sans-serif">
+    <body>
         <div class="container pv4">
             <div class="flex flex-column justify-center items-center pa2">
                 <img class="logo" src="assets/tj-cup-logo.png" alt="TJ Cup Logo" />
