@@ -44,7 +44,26 @@ function store(state, emitter) {
         }
     ]
 
-    emitter.on('DOMContentLoaded', () => {
+    state.newTime = {
+        name: '',
+        time: ''
+    }
 
-    });
+    emitter.on(state.events.DOMCONTENTLOADED, () => {
+        emitter.on('newTime:update', ({ key, value }) => {
+            state.newTime[key] = value;
+        })
+
+        emitter.on('time:add', () => {
+            if (state.newTime.name !== '' && state.newTime.time !== '') {
+                state.times.push(state.newTime); //push new time into times list
+                state.newTime = { //reset it's state
+                    name: '',
+                    time: ''
+                }
+                state.modalOpen = false; //close the modal
+                emitter.emit(state.events.RENDER);
+            }
+        })
+    })
 }
