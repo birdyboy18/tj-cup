@@ -1,7 +1,7 @@
 module.exports = store;
 
 function store(state, emitter) {
-    state.modalOpen = true;
+    state.modalOpen = false;
 
     emitter.on(state.events.DOMCONTENTLOADED, (e) => {
 
