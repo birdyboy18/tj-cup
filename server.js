@@ -1,3 +1,5 @@
+const https = require('https');
+const fs = require('fs');
 const Express = require('express');
 const Router = Express.Router;
 const bodyParser = require('body-parser');
@@ -6,7 +8,15 @@ const low = require('lowdb');
 const FileSync = require('lowdb/adapters/FileSync');
 const shortId = require('shortid');
 const moment = require('moment');
+const cors = require('cors');
 const app = Express();
+
+const options = {
+    key: fs.readFileSync( './localhost.key' ),
+    cert: fs.readFileSync( './localhost.cert' ),
+    requestCert: false,
+    rejectUnauthorized: false
+};
 
 //set up the db
 let adapter = new FileSync('./db/db.json');
@@ -32,7 +42,7 @@ router.get('/time', (req, res, next) => {
         } else {
             return 1;
         }
-    }).slice(0,10);
+    });
     res.json(results);
 });
 
@@ -65,11 +75,12 @@ router.post('/time', (req, res, next) => {
         }
     }
 });
-
+app.use(cors());
 app.use(bodyParser.json());
 app.use('/', serve('./src/dist/'));
 app.use('/api', router);
 
-app.listen(7000, () => {
+let server = https.createServer(options, app);
+server.listen(7000, () => {
     console.log(`App started and listening on port 7000`);
 });

@@ -1,24 +1,7 @@
 module.exports = store
 
 function store(state, emitter) {
-    state.times = [
-        {
-            name: "Dave Rose",
-            time: "1.03.443"
-        },
-        {
-            name: "Mark Dalzel",
-            time: "1.04.634"
-        },
-        {
-            name: "Jack Ford",
-            time: "1.06.275"
-        },
-        {
-            name: "Paul Bird",
-            time: "1.08.623"
-        }
-    ]
+    state.times = []
 
     state.newTime = {
         name: '',
@@ -41,5 +24,18 @@ function store(state, emitter) {
                 emitter.emit(state.events.RENDER);
             }
         })
+
+        //lets fetch all of the results from the api
+        fetchTimes().then(json => {
+            state.times = json;
+            emitter.emit(state.events.RENDER);
+        })
     })
+
+    function fetchTimes() {
+        let url = 'https://localhost:7000/api/time';
+        return fetch(url).then(res => {
+            return res.json();
+        })
+    }
 }
