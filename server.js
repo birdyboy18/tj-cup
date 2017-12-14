@@ -75,6 +75,15 @@ router.post('/time', (req, res, next) => {
         }
     }
 });
+
+router.delete('/time/:id', (req, res) => {
+    let {id} = req.params;
+    db.get('times').remove({id: id}).write();
+    res.json({
+        'message': `Deleted time with id of ${id}`
+    })
+});
+
 app.use(cors());
 app.use(bodyParser.json());
 app.use('/', serve('./src/dist/'));
