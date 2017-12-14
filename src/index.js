@@ -20,6 +20,7 @@ app.use(timesStore)
 app.use(modalStore)
 
 app.route('/', require('./views/main'))
+app.route('/admin', require('./views/admin/admin'))
 app.route('/*', require('./views/404'))
 
 if (!module.parent) app.mount('body')

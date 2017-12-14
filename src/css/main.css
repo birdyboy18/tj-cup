@@ -21,6 +21,10 @@ body {
     width: 450px;
 }
 
+.time-item {
+    position: relative;
+}
+
 .add-time-btn {
     position: fixed;
     top: 50px;
@@ -103,4 +107,24 @@ body {
 
 .submit-btn:hover {
     transform: translateY(-3px);
+}
+
+.admin-input {
+    border: none;
+    border-bottom: 1px solid #333;
+}
+
+.admin-remove {
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    opacity: 0.4;
+    transition: all 0.35s;
+    position: absolute;
+    top:0;
+    right: 0;
+}
+
+.admin-remove:hover {
+    opacity: 1;
 }

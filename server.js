@@ -1,3 +1,4 @@
+require('dotenv').config();
 const https = require('https');
 const fs = require('fs');
 const Express = require('express');
@@ -11,8 +12,9 @@ const moment = require('moment');
 const cors = require('cors');
 const app = Express();
 
+let options = {};
 if (process.env.NODE_ENV === "development") {
-    const options = {
+    options = {
         key: fs.readFileSync( './localhost.key' ),
         cert: fs.readFileSync( './localhost.cert' ),
         requestCert: false,
@@ -93,11 +95,11 @@ app.use('/api', router);
 
 if (process.env.NODE_ENV === "development") {
     let server = https.createServer(options, app);
-    server.listen(7000, () => {
-        console.log(`App started and listening on port 7000`);
+    server.listen(5050, () => {
+        console.log(`https App started and listening on port 5050`);
     });
 } else {
-    app.listen(7000, () => {
-        console.log(`App started and listening on port 7000`);
+    app.listen(5050, () => {
+        console.log(`App started and listening on port 5050`);
     })
 }
