@@ -11,12 +11,14 @@ const moment = require('moment');
 const cors = require('cors');
 const app = Express();
 
-const options = {
-    key: fs.readFileSync( './localhost.key' ),
-    cert: fs.readFileSync( './localhost.cert' ),
-    requestCert: false,
-    rejectUnauthorized: false
-};
+if (process.env.NODE_ENV === "development") {
+    const options = {
+        key: fs.readFileSync( './localhost.key' ),
+        cert: fs.readFileSync( './localhost.cert' ),
+        requestCert: false,
+        rejectUnauthorized: false
+    };
+}
 
 //set up the db
 let adapter = new FileSync('./db/db.json');
@@ -89,7 +91,13 @@ app.use(bodyParser.json());
 app.use('/', serve('./src/dist/'));
 app.use('/api', router);
 
-let server = https.createServer(options, app);
-server.listen(7000, () => {
-    console.log(`App started and listening on port 7000`);
-});
+if (process.env.NODE_ENV === "development") {
+    let server = https.createServer(options, app);
+    server.listen(7000, () => {
+        console.log(`App started and listening on port 7000`);
+    });
+} else {
+    app.listen(7000, () => {
+        console.log(`App started and listening on port 7000`);
+    })
+}
