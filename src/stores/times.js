@@ -34,7 +34,7 @@ function store(state, emitter) {
 
         emitter.on('time:fetch', () => {
             fetchTimes().then(json => {
-                state.times = json.slice(0,10);
+                state.times = json;
                 emitter.emit(state.events.RENDER);
             })
         })
@@ -48,7 +48,7 @@ function store(state, emitter) {
 
         //lets fetch all of the results from the api
         fetchTimes().then(json => {
-            state.times = json.slice(0,10);
+            state.times = json;
             emitter.emit(state.events.RENDER);
         })
     })
